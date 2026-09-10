@@ -1,0 +1,47 @@
+name: EasyTPA
+version: '1.0.0'
+main: com.easytpa.EasyTPAPlugin
+api-version: '1.21'
+description: Lightweight configurable teleport request plugin — /tpa, accept/deny, per-player settings, auto-accept, whitelist, DB persistent. Paper & Spigot.
+prefix: EasyTPA
+author: you
+permissions:
+  easytpa.tpa:
+    description: Send requests
+    default: true
+  easytpa.tpaccept:
+    description: Accept requests
+    default: true
+  easytpa.tpdeny:
+    description: Deny requests
+    default: true
+  easytpa.settings:
+    description: Change own settings
+    default: true
+  easytpa.whitelist:
+    description: Manage whitelist
+    default: true
+  easytpa.admin:
+    description: Admin
+    default: op
+commands:
+  tpa:
+    description: Send teleport request
+    usage: /tpa <player>
+    permission: easytpa.tpa
+  tpaccept:
+    description: Accept teleport request
+    usage: /tpaccept [player]
+    permission: easytpa.tpaccept
+  tpdeny:
+    description: Deny teleport request
+    usage: /tpdeny [player]
+    permission: easytpa.tpdeny
+  tpasettings:
+    description: Per-player teleport settings
+    usage: /tpasettings [autoAccept|mode|status]
+    permission: easytpa.settings
+  tpawhitelist:
+    description: Teleport whitelist
+    usage: /tpawhitelist <add|remove|list> [player]
+    permission: easytpa.whitelist

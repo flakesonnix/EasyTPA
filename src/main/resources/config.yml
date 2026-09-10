@@ -1,0 +1,58 @@
+# EasyTPA — config (Paper & Spigot)
+# Lightweight, DB persistent. See docs/CONFIGURATION.md
+
+database:
+  type: sqlite
+  pool:
+    maximum-pool-size: 10
+    minimum-idle: 2
+    connection-timeout: 30000
+    idle-timeout: 600000
+    max-lifetime: 1800000
+  sqlite:
+    file: database.db # → plugins/EasyTPA/database.db
+  mysql:
+    host: localhost
+    port: 3306
+    database: minecraft
+    user: root
+    password: "change_me"
+    params: "useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf8mb4&serverTimezone=UTC"
+  postgresql:
+    host: localhost
+    port: 5432
+    database: minecraft
+    user: postgres
+    password: "change_me"
+    params: "sslmode=disable"
+
+tpa:
+  request-expiry-seconds: 60
+  cooldown-seconds: 5
+  teleport-delay-seconds: 3 # 0 = instant, 3 = warmup with move cancel
+  cancel-on-move: true
+  auto-accept:
+    enabled: true
+    permission: "easytpa.autoaccept" # if player has perm, auto-accept works
+  whitelist:
+    enabled: true
+    # if enabled, only whitelisted players can send to you (when mode=whitelist)
+  sound:
+    on-request: true
+    on-accept: true
+    on-deny: true
+
+messages:
+  prefix: "§b[EasyTPA]§r "
+  request-sent: "§aRequest sent to {target}."
+  request-received: "§e{requester} wants to teleport to you. §a/tpaccept §7or §c/tpdeny"
+  already-has-request: "§cYou already have a pending request."
+  target-has-request: "§cTarget already has a pending request from you."
+  no-request: "§cNo pending request."
+  accepted: "§aAccepted. Teleporting {player}..."
+  denied: "§cDenied."
+  teleported: "§aTeleported!"
+  cooldown: "§cWait {seconds}s before next request."
+  blocked: "§c{target} is not accepting requests."
+  whitelist-added: "§aAdded {player} to whitelist."
+  whitelist-removed: "§aRemoved {player} from whitelist."
