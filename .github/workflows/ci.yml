@@ -14,8 +14,14 @@ jobs:
       contents: read
 
     steps:
-      - name: Checkout
+      - name: Checkout EasyTPA
         uses: actions/checkout@v4
+
+      - name: Checkout PurrCore (core for composite build)
+        uses: actions/checkout@v4
+        with:
+          repository: flakesonnix/PurrCore
+          path: PurrCore
 
       - name: Install Nix
         uses: cachix/install-nix-action@v27
@@ -57,11 +63,20 @@ jobs:
         run: nix build --accept-flake-config --option sandbox relaxed --impure --no-link --print-out-paths
         continue-on-error: true # Gradle Central fetch may be flaky; devShell build is primary
 
-      - name: Upload jar
+      - name: Upload jar (EasyTPA)
         uses: actions/upload-artifact@v4
         if: success()
         with:
-          name: template-plugin
+          name: EasyTPA-${{ github.sha }}
+          path: build/libs/easytpa-*.jar
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload jar (all)
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: easytpa-all
           path: build/libs/*.jar
           if-no-files-found: warn
 

@@ -5,6 +5,9 @@ api-version: '1.21'
 description: Lightweight configurable teleport request plugin — /tpa, accept/deny, per-player settings, auto-accept, whitelist, DB persistent. Paper & Spigot.
 prefix: EasyTPA
 author: you
+dependencies:
+  required:
+    PurrCore: { load: BEFORE, required: true }
 permissions:
   easytpa.tpa:
     description: Send requests

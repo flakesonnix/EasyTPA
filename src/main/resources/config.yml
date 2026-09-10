@@ -1,6 +1,8 @@
 # EasyTPA — config (Paper & Spigot)
 # Lightweight, DB persistent. See docs/CONFIGURATION.md
 
+language: en # en, de — files in lang/*.yml (copied to plugins/EasyTPA/lang/ on first run)
+
 database:
   type: sqlite
   pool:
@@ -42,6 +44,7 @@ tpa:
     on-accept: true
     on-deny: true
 
+# messages moved to lang/*.yml (i18n) — kept here as fallback if lang missing
 messages:
   prefix: "§b[EasyTPA]§r "
   request-sent: "§aRequest sent to {target}."

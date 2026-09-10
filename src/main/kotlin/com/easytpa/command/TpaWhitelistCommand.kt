@@ -1,55 +1,56 @@
 package com.easytpa.command
 
 import com.easytpa.db.WhitelistRepository
+import com.easytpa.i18n.I18n
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
 import org.bukkit.entity.Player
 
-class TpaWhitelistCommand(private val repo: WhitelistRepository) :
+class TpaWhitelistCommand(private val repo: WhitelistRepository, private val i18n: I18n) :
     CommandExecutor,
     TabCompleter {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (sender !is Player) {
-            sender.sendMessage("Only players")
+            i18n.send(sender, "only-players")
             return true
         }
         if (args.isEmpty()) {
-            sender.sendMessage("§cUsage: /tpawhitelist <add|remove|list> [player]")
+            i18n.send(sender, "usage-whitelist")
             return true
         }
         when (args[0].lowercase()) {
             "add" -> {
                 if (args.size < 2) {
-                    sender.sendMessage("§cUsage: /tpawhitelist add <player>")
+                    i18n.send(sender, "usage-whitelist")
                     return true
                 }
                 val t = sender.server.getPlayer(args[1]) ?: sender.server.getOfflinePlayer(args[1])
                 val uuid = t.uniqueId
                 val name = t.name ?: args[1]
                 val ok = repo.add(sender.uniqueId, uuid, name)
-                sender.sendMessage(if (ok) "§aAdded $name" else "§cAlready whitelisted")
+                i18n.send(sender, if (ok) "whitelist-added" else "whitelist-already", "player" to name)
             }
             "remove", "rm", "del" -> {
                 if (args.size < 2) {
-                    sender.sendMessage("§cUsage: /tpawhitelist remove <player>")
+                    i18n.send(sender, "usage-whitelist")
                     return true
                 }
                 val t = sender.server.getOfflinePlayer(args[1])
                 val ok = repo.remove(sender.uniqueId, t.uniqueId)
-                sender.sendMessage(if (ok) "§aRemoved ${args[1]}" else "§cNot in whitelist")
+                i18n.send(sender, if (ok) "whitelist-removed" else "whitelist-not-found", "player" to args[1])
             }
             "list", "ls" -> {
                 val list = repo.list(sender.uniqueId)
                 if (list.isEmpty()) {
-                    sender.sendMessage("§7Whitelist empty — everyone can send (unless mode=BLOCK)")
+                    i18n.send(sender, "whitelist-empty")
                 } else {
-                    sender.sendMessage("§bWhitelist (${list.size}):")
-                    list.forEach { sender.sendMessage("§7- ${it.second} (${it.first})") }
+                    i18n.send(sender, "whitelist-list-header", "size" to list.size.toString())
+                    list.forEach { i18n.sendRaw(sender, "whitelist-list-entry", "player" to it.second, "uuid" to it.first.toString()) }
                 }
             }
-            else -> sender.sendMessage("§cUnknown: add|remove|list")
+            else -> i18n.send(sender, "usage-whitelist")
         }
         return true
     }

@@ -8,6 +8,7 @@ import com.easytpa.command.TpaWhitelistCommand
 import com.easytpa.db.Database
 import com.easytpa.db.TpaSettingsRepository
 import com.easytpa.db.WhitelistRepository
+import com.easytpa.i18n.I18n
 import com.easytpa.service.TeleportService
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -20,9 +21,14 @@ class EasyTPAPlugin : JavaPlugin() {
         private set
     lateinit var teleportService: TeleportService
         private set
+    lateinit var i18n: I18n
+        private set
 
     override fun onEnable() {
         saveDefaultConfig()
+        // i18n — must load before DB/service (messages)
+        i18n = I18n(this)
+        i18n.load()
         // DB
         database = Database(this)
         try {
@@ -34,23 +40,23 @@ class EasyTPAPlugin : JavaPlugin() {
         }
         settingsRepo = TpaSettingsRepository(database, logger)
         whitelistRepo = WhitelistRepository(database, logger)
-        teleportService = TeleportService(this, settingsRepo, whitelistRepo)
+        teleportService = TeleportService(this, settingsRepo, whitelistRepo, i18n)
 
         // Commands — Paper & Spigot compatible (plugin.yml)
         getCommand("tpa")?.let {
-            val c = TpaCommand(teleportService)
+            val c = TpaCommand(teleportService, i18n)
             it.setExecutor(c)
             it.tabCompleter = c
         }
-        getCommand("tpaccept")?.setExecutor(TpAcceptCommand(teleportService))
-        getCommand("tpdeny")?.setExecutor(TpDenyCommand(teleportService))
+        getCommand("tpaccept")?.setExecutor(TpAcceptCommand(teleportService, i18n))
+        getCommand("tpdeny")?.setExecutor(TpDenyCommand(teleportService, i18n))
         getCommand("tpasettings")?.let {
-            val c = TpaSettingsCommand(settingsRepo)
+            val c = TpaSettingsCommand(settingsRepo, i18n)
             it.setExecutor(c)
             it.tabCompleter = c
         }
         getCommand("tpawhitelist")?.let {
-            val c = TpaWhitelistCommand(whitelistRepo)
+            val c = TpaWhitelistCommand(whitelistRepo, i18n)
             it.setExecutor(c)
             it.tabCompleter = c
         }

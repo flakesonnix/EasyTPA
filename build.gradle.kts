@@ -23,11 +23,14 @@ dependencies {
     // Paper 1.26.2 target — defaults to 1.21.10 until 1.26.2 hits repo.papermc.io (API compat same)
     compileOnly("io.papermc.paper:paper-api:$paperVersion")
 
+    // PurrCore — shared core (DB + I18n + utils) — you use everywhere
+    compileOnly("com.purrcore:purrcore:1.0.0")
+
     // Kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
-    // --- DB ---
+    // --- DB (also provided by PurrCore, but keep for standalone without core) ---
     implementation("com.zaxxer:HikariCP:6.2.1")
     implementation("org.xerial:sqlite-jdbc:3.47.1.0")
     // mysql + postgres drivers — remove what you don't need to slim jar
