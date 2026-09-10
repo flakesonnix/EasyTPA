@@ -1,6 +1,6 @@
 # EasyTPA — Paper & Spigot
 
-[![CI](https://github.com/YOU/EasyTPA/actions/workflows/ci.yml/badge.svg)](https://github.com/YOU/EasyTPA/actions/workflows/ci.yml)
+[![CI](https://github.com/flakesonnix/EasyTPA/actions/workflows/ci.yml/badge.svg)](https://github.com/flakesonnix/EasyTPA/actions/workflows/ci.yml)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0.21-7F52FF?logo=kotlin)](https://kotlinlang.org)
 [![Paper](https://img.shields.io/badge/Paper-1.26.2-0288D1?logo=minecraft)](https://papermc.io)
 [![Spigot](https://img.shields.io/badge/Spigot-compatible-ED8B00)](https://www.spigotmc.org)
