@@ -57,6 +57,10 @@ class TpaSettingsRepository(private val db: Database, private val log: Logger) {
         }
     }
 
-    // TODO: you implement toggles
-    // fun setAutoAccept(uuid: UUID, enabled: Boolean) = upsert(getOrDefault(uuid).copy(autoAccept = enabled))
+    // Toggle helper functions for individual settings
+    fun setAutoAccept(uuid: UUID, enabled: Boolean) = upsert(getOrDefault(uuid).copy(autoAccept = enabled))
+
+    fun setRequestMode(uuid: UUID, mode: String) = upsert(getOrDefault(uuid).copy(requestMode = mode))
+
+    fun setWhitelistEnabled(uuid: UUID, enabled: Boolean) = upsert(getOrDefault(uuid).copy(whitelistEnabled = enabled))
 }

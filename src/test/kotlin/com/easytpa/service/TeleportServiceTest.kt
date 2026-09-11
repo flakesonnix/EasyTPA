@@ -99,8 +99,8 @@ class TeleportServiceTest {
         every { to.uniqueId } returns UUID.randomUUID()
         every { from.name } returns "A"
         every { to.name } returns "B"
-        every { from.hasPermission(any()) } returns false
-        every { to.hasPermission(any()) } returns false
+        every { from.hasPermission(any<String>()) } returns false
+        every { to.hasPermission(any<String>()) } returns false
         val res = service.canSend(from, to)
         assertNull(res)
         db.close()
