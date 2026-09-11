@@ -66,7 +66,10 @@ class TeleportServiceTest {
     fun `canSend blocks self`() {
         val (plugin, _, _) = mockPlugin()
         val i18n = I18n(plugin).apply { load() }
-        val db = Database(plugin).apply { connect(); migrate() }
+        val db = Database(plugin).apply {
+            connect()
+            migrate()
+        }
         val settings = TpaSettingsRepository(db, mockk(relaxed = true))
         val whitelist = WhitelistRepository(db, mockk(relaxed = true))
         val service = TeleportService(plugin, settings, whitelist, i18n)
@@ -83,7 +86,10 @@ class TeleportServiceTest {
     fun `canSend allows when no block`() {
         val (plugin, _, _) = mockPlugin()
         val i18n = I18n(plugin).apply { load() }
-        val db = Database(plugin).apply { connect(); migrate() }
+        val db = Database(plugin).apply {
+            connect()
+            migrate()
+        }
         val settings = TpaSettingsRepository(db, mockk(relaxed = true))
         val whitelist = WhitelistRepository(db, mockk(relaxed = true))
         val service = TeleportService(plugin, settings, whitelist, i18n)

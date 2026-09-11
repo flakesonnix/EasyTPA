@@ -1,6 +1,5 @@
 package com.easytpa.db
 
-import com.easytpa.i18n.I18n
 import io.mockk.every
 import io.mockk.mockk
 import java.io.File
