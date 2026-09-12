@@ -21,6 +21,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Checkout PurrCore (core for composite build)
+        uses: actions/checkout@v4
+        with:
+          repository: flakesonnix/PurrCore
+          path: PurrCore
+
       - name: Install Nix
         uses: cachix/install-nix-action@v27
         with:
